@@ -1,4 +1,4 @@
-# Redis Cluster
+# Redis Cluster in Docker on osx
 
 Using port from 7000 ~ 7005
 
@@ -14,6 +14,10 @@ bash start.sh
 redis-cli -c -p 7000
 ```
 
+### to stop the cluster
+```
+docker-compose down
+```
 
 ### to install redis-cli 
 ```
