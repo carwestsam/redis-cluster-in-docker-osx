@@ -1,0 +1,117 @@
+version: '2'
+
+# networks:
+#   redis-net:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 10.6.0.0/16
+#           gateway: 10.6.0.1
+
+
+# networks:
+#   redis-net:
+#     driver: host
+
+services:
+  r7000:
+    image: 'carwestsam/redis-with-source'
+    container_name: redis-cluster-entry
+    ports:
+      - '7000:7000'
+      - '7001:7001'
+      - '7002:7002'
+      - '7003:7003'
+      - '7004:7004'
+      - '7005:7005'
+    volumes:
+      - ./configure/7000/redis.conf:/usr/local/etc/redis/redis.conf
+      # - ./configure/7000/nodes.conf:/data/nodes.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    # network_mode: "service:r7000"
+  r7001:
+    image: 'carwestsam/redis-with-source'
+    # ports:
+    #   - '7001:7001'
+    volumes:
+      - ./configure/7001/redis.conf:/usr/local/etc/redis/redis.conf
+      # - ./configure/7001/nodes.conf:/data/nodes.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: "service:r7000"
+  r7002:
+    image: 'carwestsam/redis-with-source'
+    # ports:
+    #   - '7002:7002'
+    volumes:
+      - ./configure/7002/redis.conf:/usr/local/etc/redis/redis.conf
+      # - ./configure/7002/nodes.conf:/data/nodes.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: "service:r7000"
+  r7003:
+    image: 'carwestsam/redis-with-source'
+    # ports:
+    #   - '7003:7003'
+    volumes:
+      - ./configure/7003/redis.conf:/usr/local/etc/redis/redis.conf
+      # - ./configure/7003/nodes.conf:/data/nodes.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: "service:r7000"
+  r7004:
+    image: 'carwestsam/redis-with-source'
+    # ports:
+    #   - '7004:7004'
+    volumes:
+      - ./configure/7004/redis.conf:/usr/local/etc/redis/redis.conf
+      # - ./configure/7004/nodes.conf:/data/nodes.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: "service:r7000"
+  r7005:
+    image: 'carwestsam/redis-with-source'
+    # ports:
+    #   - '7005:7005'
+    volumes:
+      - ./configure/7005/redis.conf:/usr/local/etc/redis/redis.conf
+      # - ./configure/7005/nodes.conf:/data/nodes.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: "service:r7000"
+  
+
+
+  # redis-master:
+  #   build: './configure/master/'
+  #   ports:
+  #     - '6101:6301'
+  #   networks:
+  #     - host
+  #   volumes:
+  #     - ./configure/master/redis.conf:/usr/local/etc/redis/redis.conf
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  
+  # redis-master_2:
+  #   build: './configure/master1'
+
+  # redis-slave-1:
+  #   image: 'redis:4.0.9-alpine'
+  #   depends_on:
+  #     - redis-master
+  #   ports:
+  #     - '6102:6302'
+  #   networks:
+  #     redis-net:
+  #       ipv4_address: 10.6.0.3
+  #   volumes:
+  #     - ./configure/slave1/redis.conf:/usr/local/etc/redis/redis.conf
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  
+  # redis-slave-2:
+  #   image: 'redis:4.0.9-alpine'
+  #   depends_on:
+  #     - redis-master
+  #   ports:
+  #     - '6103:6303'
+  #   networks:
+  #     redis-net:
+  #       ipv4_address: 10.6.0.4
+  #   volumes:
+  #     - ./configure/slave2/redis.conf:/usr/local/etc/redis/redis.conf
+  #   command: redis-server /usr/local/etc/redis/redis.conf
