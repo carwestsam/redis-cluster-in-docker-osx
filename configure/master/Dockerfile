@@ -65,6 +65,7 @@ VOLUME /data
 WORKDIR /data
 
 COPY docker-entrypoint.sh /usr/local/bin/
+COPY redis-trib.rb /data/redis-trib.rb
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 # EXPOSE 6379
