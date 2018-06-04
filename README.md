@@ -27,7 +27,7 @@ brew install redis-cli
 ### example output in cli
 
 ```
-○ → redis-cli -c -p 7000
+○ → redis-cli -c -p 7000 -a myredis
 127.0.0.1:7000> set foo bar
 -> Redirected to slot [12182] located at 127.0.0.1:7002
 OK
